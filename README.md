@@ -3,7 +3,7 @@
 
   &#xa0;
 
-  <!-- <a href="https://yashodadevelopment.netlify.app">Demo</a> -->
+  <!-- <a href="https://gamedoper.com">Demo</a> -->
 </div>
 
 <h1 align="center">Nginx Wildcard SSL</h1>
@@ -69,7 +69,14 @@ $ apt-get update
 $ sudo apt-get install certbot
 
 # Install certbot nginx
-$ apt-get install python3-certbot-nginx
+
+$ apt install snapd
+$ snap install core
+$ snap install --classic certbot
+$ ln -s /snap/bin/certbot /usr/bin/certbot
+$ certbot --nginx 
+$ Installs a certificate for domain example.com
+
 ```
 
 ## :sparkles: Set Up NGINX ##
@@ -85,7 +92,7 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
     root /var/www/html;
-    server_name mverve.in www.mverve.in;
+    server_name gamedoper.xyz www.gamedoper.xyz;
 }
 ```
 
@@ -99,33 +106,20 @@ $ nginx -t
 $ nginx -s reload
 ```
 
-## :sparkles: Set Up Certbot (Optional) ##
-
-You have to install python3-pip in your system. If you use lower than 16.04 and below use python-pip	 instead of python3-pip
-
-```bash
-# Install Pip
-$ apt-get install python3-pip
-
-```
-
-Use this below command to display your certbot installed pip dependencies
-
-```bash
-$ pip list | grep certbot
-# After you put this command, you should able to see these below dependencies
-certbot                0.40.0
-certbot-nginx          0.40.0
-certbot-dns-digitalocean (1.11.0)
-```
 
 ## :sparkles: Config Certbot DNS token ##
 
 Create a file in root directory by given name,
 
 ```bash
-# Create a txt file
-$ nano /root/0IMPORTANT_digital_ocean_creds.txt
+certbot --server https://acme-v02.api.letsencrypt.org/directory -d *.anglo-indiancuisine.com -d anglo-indiancuisine.com --manual --preferred-challenges dns-01 certonly
+certbot certificates
+sudo nano /etc/nginx/sites-enabled/raven_hacks
+certbot renew
+/usr/bin/certbot renew >> /var/log/letsencrypt/renew.log
+crontab -e
+30 1 * * * /usr/bin/certbot renew >> /var/log/letsencrypt/renew.log
+
 
 ```
 
